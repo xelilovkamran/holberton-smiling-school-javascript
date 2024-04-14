@@ -1,5 +1,6 @@
 $(document).ready(function () {
-  const carousel = $("#carouselExampleControls2");
+  const carousel1 = $("#carouselExampleControls2", "#carouselExampleControls3");
+  const carousel2 = $("#carouselExampleControls3");
 
   // generate stars
   function generateStarts(rating) {
@@ -19,18 +20,31 @@ $(document).ready(function () {
   }
 
   // Handle the slid event to enable/disable arrows
-  carousel.on("slid.bs.carousel", function () {
-    handleArrows();
+  carousel1.on("slid.bs.carousel", function () {
+    handleArrows(carousel1);
   });
 
   // Handle the slide event to enable/disable arrows
-  carousel.on("slide.bs.carousel", function () {
-    handleArrows();
+  carousel1.on("slide.bs.carousel", function () {
+    handleArrows(carousel1);
   });
 
-  function handleArrows() {
+  // Handle the slid event to enable/disable arrows
+  carousel2.on("slid.bs.carousel", function () {
+    handleArrows(carousel2);
+  });
+
+  // Handle the slide event to enable/disable arrows
+  carousel2.on("slide.bs.carousel", function () {
+    handleArrows(carousel2);
+  });
+
+  function handleArrows(carousel) {
     // Get the total number of carousel items
     const totalItems = carousel.find(".carousel-item").length;
+    if (totalItems === 1) {
+      return;
+    }
     // Get the index of the current active carousel item
     const activeIndex = carousel.find(".carousel-item.active").index();
 
@@ -274,7 +288,7 @@ $(document).ready(function () {
         </div>`
         );
       }
-      handleArrows();
+      handleArrows(carousel1);
     })
     .fail(() => {
       alert("Error in fetching popular tutorials");
@@ -456,7 +470,7 @@ $(document).ready(function () {
         </div>`
         );
       }
-      handleArrows();
+      handleArrows(carousel2);
     })
     .fail(() => {
       alert("Error in fetching latest tutorials");
@@ -511,7 +525,6 @@ $(document).ready(function () {
     });
 
     const URL = `https://smileschool-api.hbtn.info/courses?${params}`;
-    console.log(URL);
 
     $.ajax({
       type: "GET",
